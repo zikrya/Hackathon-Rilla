@@ -1,7 +1,6 @@
-// app/components/Navbar.tsx
 import React from 'react';
-import Link from 'next/link'; // Import Next.js Link component
-import './Navbar.css'; // Ensure your styles are imported correctly
+import Link from 'next/link';
+import './Navbar.css';
 
 const Navbar: React.FC = () => {
   return (

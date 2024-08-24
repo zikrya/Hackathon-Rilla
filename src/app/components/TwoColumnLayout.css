@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  gap: 10px;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 2%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.041);
+}
+
+.left-column {
+  flex: 1.5;
+  background-color: #ffffff;
+}
+
+.right-column {
+  flex: 1;
+  background-color: #ffffff;
+}
+
+  

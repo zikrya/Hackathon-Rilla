@@ -4,7 +4,7 @@
   align-items: center;
   height: 50vh;
   padding: 20px;
-  flex-direction: column
+  flex-direction: column;
 }
 
 .dropzone-title {
@@ -14,22 +14,31 @@
 }
 
 .dropzone {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
   max-width: 600px;
   height: auto;
-  border: 2px dashed #cccccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s ease;
+  background-color: rgba(224, 200, 241, 0.4);
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  background-blend-mode: overlay;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  overflow: hidden;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropzone::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 2px dashed #ffffff;
+  border-radius: 6px;
+  pointer-events: none;
 }
 
 .dropzone:hover {
@@ -42,7 +51,26 @@
 }
 
 .dropzone-text {
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bold;
   color: #333333;
   text-align: center;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.dropzone-text:hover {
+  background-color: rgba(224, 200, 241, 0.6);
+  border-color: rgba(224, 200, 241, 0.4);
+}
+
+.file-input {
+  display: none;
 }
