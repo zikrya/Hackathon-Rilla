@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 
+// Configure AWS SDK
 AWS.config.update({
   region: 'us-east-1',
   credentials: new AWS.Credentials({
@@ -8,6 +9,11 @@ AWS.config.update({
   }),
 });
 
+// Export services
 export const s3 = new AWS.S3();
 export const dynamoDb = new AWS.DynamoDB.DocumentClient();
 export const lambda = new AWS.Lambda();
+
+export const cognito = new AWS.CognitoIdentityServiceProvider({
+  apiVersion: '2016-04-18',
+});
