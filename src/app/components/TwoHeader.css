@@ -1,0 +1,8 @@
+.header {
+    font-size: 18px;
+    text-align: left;
+    color: gray;
+    padding-bottom: 8px;
+    margin: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}

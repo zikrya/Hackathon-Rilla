@@ -19,11 +19,12 @@ const DropZoneComponent = () => {
         <h1 className="dropzone-title">Let's see your transcript.</h1>
         <div {...getRootProps()} className="dropzone">
             <input {...getInputProps()}/>
-            <PiFilePdfThin className="dropzone-icon" size={48} />
+            <PiFilePdfThin className="dropzone-icon" style={{ color: 'white' }} size={48} />
             <p className="dropzone-text">
               <AiOutlineFileAdd size={16} />
               CHOOSE FILES
             </p>
+            <p className="dropzone-subtitle">or just drop them here</p>
         </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Background from './components/Background';
 import './globals.css';
+import Footer from './components/Footer';
 
 export const metadata = {
   title: 'Rilla Comments',
@@ -15,7 +16,10 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="App">
           <Navbar />
           <Background />
-          <main>{children}</main>
+            <main>
+              {children}
+            </main>
+          <Footer />
         </div>
       </body>
     </html>

@@ -1,16 +1,25 @@
 import React from 'react';
 import './TwoColumnLayout.css';
+import TwoHeader from './TwoHeader';
 
-const TwoColumnLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface TwoColumnLayoutProps {
+  leftHeader?: string;
+  rightHeader?: string;
+  children: React.ReactNode;
+}
+
+const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({ leftHeader, rightHeader, children }) => {
   const [leftContent, rightContent] = React.Children.toArray(children);
 
   return (
     <div className="container">
       <div className="left-column">
-        {leftContent} {/* left side content */}
+        {leftHeader && <TwoHeader title={leftHeader} />}
+        {leftContent}
       </div>
       <div className="right-column">
-        {rightContent} {/* right side content */}
+        {rightHeader && <TwoHeader title={rightHeader} />}
+        {rightContent}
       </div>
     </div>
   );

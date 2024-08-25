@@ -1,18 +1,16 @@
 import React from 'react';
 import TwoColumnLayout from '../components/TwoColumnLayout'; // Adjust the import path if necessary
 import DropZoneComponent from '../components/DropZoneComponent';
-import CommentComponent from '../components/CommentSection';
+import CommentSection from '../components/CommentSection';
 
 const UploadPage: React.FC = () => {
   return (
-    <TwoColumnLayout>
+    <TwoColumnLayout leftHeader="Transcript" rightHeader="Comments">
       <div className="left-side">
         <DropZoneComponent />
-        {/* You can add more components to the left side here */}
       </div>
       <div className="right-side">
-        <CommentComponent />
-        {/* You can add more components to the right side here */}
+        <CommentSection />
       </div>
     </TwoColumnLayout>
   );
