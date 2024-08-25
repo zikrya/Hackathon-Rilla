@@ -1,13 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import UserPool from "../../Userpool"; // Adjust this import path as needed
+import UserPool from "../../Userpool";
 import { CognitoUser } from "amazon-cognito-identity-js";
+import './signup.css';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmationCode, setConfirmationCode] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isSignupSuccessful, setIsSignupSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -19,6 +21,7 @@ const Signup: React.FC = () => {
         setErrorMessage(err.message);
       } else {
         console.log("User signed up successfully:", data);
+        setIsSignupSuccessful(true);
         setIsConfirmed(false);
       }
     });
@@ -39,62 +42,70 @@ const Signup: React.FC = () => {
       } else {
         console.log("User confirmed successfully:", result);
         setIsConfirmed(true);
+        setIsSignupSuccessful(false); // Reset signup state
       }
     });
   };
 
   return (
-    <div>
-      {isConfirmed ? (
-        <div>
-          <p>User confirmed successfully! You can now log in.</p>
-        </div>
-      ) : (
-        <form onSubmit={onSubmit}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(event.target.value)
-            }
-          />
+    <div className="signup-container">
+      <div className="signup-form">
+        {isSignupSuccessful ? (
+          <div className="confirmation-container">
+            <h3>Confirm Your Email</h3>
+            <form onSubmit={onConfirm}>
+              <label htmlFor="confirmationCode">Confirmation Code</label>
+              <input
+                type="text"
+                id="confirmationCode"
+                value={confirmationCode}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setConfirmationCode(event.target.value)
+                }
+                required
+              />
+              <button type="submit">Confirm Email</button>
+            </form>
+          </div>
+        ) : (
+          <>
+            <h1 className="signup-title">Sign Up</h1>
+            <form onSubmit={onSubmit}>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(event.target.value)
+                }
+                required
+              />
 
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(event.target.value)
-            }
-          />
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(event.target.value)
+                }
+                required
+              />
 
-          <button type="submit">Sign Up</button>
-        </form>
-      )}
+              <button type="submit">Sign Up</button>
+            </form>
+          </>
+        )}
+        
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {!isConfirmed && (
-        <div>
-          <h3>Confirm Your Email</h3>
-          <form onSubmit={onConfirm}>
-            <label htmlFor="confirmationCode">Confirmation Code</label>
-            <input
-              type="text"
-              id="confirmationCode"
-              value={confirmationCode}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setConfirmationCode(event.target.value)
-              }
-            />
-
-            <button type="submit">Confirm Email</button>
-          </form>
-        </div>
-      )}
-
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {!isSignupSuccessful && (
+          <div className="signup-link">
+            <p>Already have an account? <a href="/login">Log In</a></p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

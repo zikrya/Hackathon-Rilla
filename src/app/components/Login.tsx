@@ -1,8 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import UserPool from "../../Userpool";
 import { useRouter } from 'next/navigation';
+import "./Login.css";
+import Link from "next/link";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -42,34 +45,43 @@ const Login: React.FC = () => {
       },
     });
   };
-
+  
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(event.target.value)
-          }
-        />
+    <div className="login-container">
+      <div className="login-form">
+        <h1 className="login-title">Login</h1>
+        <form onSubmit={onSubmit}>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(event.target.value)
+            }
+            required
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(event.target.value)
-          }
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(event.target.value)
+            }
+            required
+          />
 
-        <button type="submit">Login</button>
+          <button type="submit">Sign In</button>
 
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
-      </form>
+          {error && <p className="error-message">{error}</p>}
+
+          <p className="signup-link">
+            Already have an account? <Link href="/signup">Sign up</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align items to the right */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Opaque background */
+    color: #000; /* Ensure text color is visible against the background */
+}
+
+.user-id {
+    margin-right: 10px; /* Space between user ID and divider */
+}
+
+.divider {
+    margin: 0 10px; /* Space around the divider */
+}
+
+.sign-out {
+    background: none;
+    border: none;
+    color: #000; /* Ensure sign-out button text color is visible */
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.sign-out:hover {
+    opacity: 0.8;
+}

@@ -7,7 +7,6 @@ import './DropZoneComponent.css';
 import { PiFilePdfThin } from "react-icons/pi";
 import { Document, Page, pdfjs } from 'react-pdf';
 
-// Set the worker URL for PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js';
 
 const DropZoneComponent = () => {

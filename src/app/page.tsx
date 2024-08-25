@@ -1,7 +1,13 @@
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 export default function Home() {
-  return (
-    <main>
-      Hackaton 2024
-    </main>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/login');
+  }, [router]);
+  
+  return null;
 }
