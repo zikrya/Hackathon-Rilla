@@ -6,6 +6,8 @@ export async function POST(req: Request) {
   try {
     const { transcriptId, userId, commentText } = await req.json();
 
+    console.log('Received data:', { transcriptId, userId, commentText });
+
     if (!transcriptId || !userId || !commentText) {
       return new NextResponse('Missing required fields', { status: 400 });
     }
@@ -26,7 +28,13 @@ export async function POST(req: Request) {
 
     await dynamoDb.put(params).promise();
 
-    return NextResponse.json({ message: 'Comment added successfully' }, { status: 201 });
+    return NextResponse.json({
+      commentId,
+      transcriptId,
+      userId,
+      commentText,
+      createdAt,
+    }, { status: 201 });
   } catch (error) {
     console.error('Error adding comment:', error);
     return new NextResponse('Failed to add comment', { status: 500 });
