@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^6.3.12",
     "aws-sdk": "^2.1682.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
     "next": "14.2.6",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
