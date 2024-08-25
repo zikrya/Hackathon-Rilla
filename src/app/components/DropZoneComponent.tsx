@@ -50,8 +50,8 @@ const DropZoneComponent = () => {
         <div
           style={{
             marginTop: '400px',
-            height: '1100px',
-            width: '900px',
+            height: '930px',
+            width: '700px',
             marginLeft: 'auto',
             marginRight: 'auto',
           }}

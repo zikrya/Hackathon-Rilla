@@ -1,0 +1,17 @@
+.comments-list {
+    overflow-y: auto;
+    max-height: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.comment-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}

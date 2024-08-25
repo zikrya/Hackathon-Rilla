@@ -1,0 +1,25 @@
+.comment {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;;
+    box-sizing: border-box;
+}
+  
+.comment-actions {
+    display: flex;
+    gap: 10px;
+}
+  
+.comment-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #e0c8f1;
+}
+  
+.comment-action-button:hover {
+    color: #e0c8f1;
+}
+  

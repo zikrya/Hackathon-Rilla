@@ -1,0 +1,15 @@
+.comment-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 4px;
+    height: 100%;
+}
+  
+.comments-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+  
