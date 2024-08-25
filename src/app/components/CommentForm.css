@@ -5,9 +5,14 @@
     padding: 10px;
     background-color: #ffffff;
     border-top: 1px solid #ddd;
-    width: 100%;
+    width: 50%;
+    position: fixed;
+    bottom: 5%;
+    left: 25%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
-  
+
 .comment-form input[type="text"] {
     padding: 8px;
     border: 1px solid #ccc;
@@ -15,7 +20,7 @@
     width: 100%;
     box-sizing: border-box;
 }
-  
+
 .comment-form button {
     padding: 8px 12px;
     border: none;
@@ -26,7 +31,7 @@
     cursor: pointer;
     margin: 0 auto;
 }
-  
+
 .comment-form button:hover {
     background-color: #d2a8f0;
 }

@@ -1,32 +1,36 @@
-//*comment list
-"use client";
-
 import React from 'react';
-import './CommentList.css';
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Import icons from react-icons
+import './CommentList.css'; // Ensure you have the correct path for your CSS file
 
-interface Comment {
+type Comment = {
   commentId: string;
+  transcriptId: string;
+  userId: string;
   commentText: string;
-}
-
-interface CommentsListProps {
-  comments?: Comment[];
-}
-
-const CommentsList: React.FC<CommentsListProps> = ({ comments = [] }) => {
-  return (
-    <div className="comments-list">
-      {comments.length > 0 ? (
-        comments.map((comment) => (
-          <div key={comment.commentId} className="comment-item">
-            <p>{comment.commentText}</p>
-          </div>
-        ))
-      ) : (
-        <p>No comments yet.</p>
-      )}
-    </div>
-  );
+  createdAt: string;
 };
 
-export default CommentsList;
+type CommentListProps = {
+  comments: Comment[];
+  onEditComment: (commentId: string) => void;
+  onDeleteComment: (commentId: string) => void;
+};
+
+const CommentList: React.FC<CommentListProps> = ({ comments, onEditComment, onDeleteComment }) => (
+  <div className="comment-list">
+    <div className="comments-container">
+      {comments.map(comment => (
+        <div key={comment.commentId} className="comment">
+          <p>{comment.commentText}</p>
+          <small>By {comment.userId} on {new Date(comment.createdAt).toLocaleDateString()}</small>
+          <div className="comment-actions">
+            <FaEdit className="icon edit-icon" onClick={() => onEditComment(comment.commentId)} />
+            <FaTrash className="icon delete-icon" onClick={() => onDeleteComment(comment.commentId)} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+export default CommentList;

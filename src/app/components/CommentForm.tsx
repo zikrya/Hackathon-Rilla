@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './CommentForm.css';
 
 type CommentFormProps = {
-  onAddComment: (text: string) => void;
+  transcriptId: string;
+  userId: string;
+  onAddComment: (comment: { transcriptId: string; userId: string; commentText: string }) => void;
   onSaveEdit: (text: string) => void;
   editingIndex: number | null;
   currentText: string;
@@ -10,6 +12,8 @@ type CommentFormProps = {
 };
 
 const CommentForm: React.FC<CommentFormProps> = ({
+  transcriptId,
+  userId,
   onAddComment,
   onSaveEdit,
   editingIndex,
@@ -18,11 +22,19 @@ const CommentForm: React.FC<CommentFormProps> = ({
 }) => {
   const [text, setText] = useState(currentText);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (text.trim() === '') return;
+
+    const comment = { transcriptId, userId, commentText: text };
+
     if (editingIndex !== null) {
       onSaveEdit(text);
     } else {
-      onAddComment(text);
+      try {
+        await onAddComment(comment); // Call onAddComment with the comment object
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
     }
     setText('');
   };

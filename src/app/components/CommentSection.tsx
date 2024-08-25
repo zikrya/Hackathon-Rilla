@@ -1,67 +1,111 @@
-"use client";
-
-import React, { useState } from 'react';
-import CommentsList from './CommentList';
+import React, { useEffect, useState } from 'react';
 import CommentForm from './CommentForm';
+import CommentList from './CommentList';
 import './CommentSection.css';
 
-interface CommentData {
+type Comment = {
   commentId: string;
   transcriptId: string;
   userId: string;
   commentText: string;
   createdAt: string;
-}
+};
 
-const CommentSection = ({ comments }: { comments: CommentData[] }) => {
-  const [localComments, setLocalComments] = useState<CommentData[]>(comments);
+const CommentSection: React.FC<{ transcriptId: string; userId: string }> = ({ transcriptId, userId }) => {
+  const [comments, setComments] = useState<Comment[]>([]);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [editText, setEditText] = useState('');
+  const [currentText, setCurrentText] = useState('');
 
-  const handleAddComment = (text: string) => {
-    if (text.trim() === '') return;
-    const newComment = {
-      commentId: `temp-${Date.now()}`,
-      transcriptId: '',
-      userId: '',
-      commentText: text,
-      createdAt: new Date().toISOString(),
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`/api/getTranscriptionWithComments?transcriptId=${transcriptId}`);
+        if (!response.ok) throw new Error('Failed to fetch comments');
+        const data = await response.json();
+        setComments(data.comments || []);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
     };
-    setLocalComments([...localComments, newComment]);
+
+    fetchComments();
+  }, [transcriptId]);
+
+  const handleAddComment = async (comment: { transcriptId: string; userId: string; commentText: string }) => {
+    try {
+      const response = await fetch('/api/addComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(comment),
+      });
+
+      if (!response.ok) throw new Error('Failed to add comment');
+      const newComment = await response.json();
+      setComments((prev) => [...prev, newComment]);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
   };
 
-  const handleSaveEdit = (text: string) => {
-    if (text.trim() === '') return;
-    setLocalComments(localComments.map((comment, index) =>
-      index === editingIndex ? { ...comment, commentText: text } : comment
-    ));
-    setEditingIndex(null);
-    setEditText('');
-  };
+  const handleSaveEdit = async (text: string) => {
+    if (editingIndex === null) return;
 
-  const handleDeleteComment = (index: number) => {
-    setLocalComments(localComments.filter((_, i) => i !== index));
-  };
-
-  const handleEditComment = (index: number) => {
-    setEditingIndex(index);
-    setEditText(localComments[index].commentText);
+    try {
+      // Implement the edit comment logic here
+      // e.g., sending a PUT request to an API endpoint to update the comment
+      // After successful edit, update the state accordingly
+      // For now, let's just clear the edit state
+      setEditingIndex(null);
+      setCurrentText('');
+    } catch (error) {
+      console.error('Error saving comment edit:', error);
+    }
   };
 
   const handleCancelEdit = () => {
     setEditingIndex(null);
-    setEditText('');
+    setCurrentText('');
+  };
+
+  const handleEditComment = (commentId: string) => {
+    const commentToEdit = comments.find(comment => comment.commentId === commentId);
+    if (commentToEdit) {
+      setEditingIndex(comments.indexOf(commentToEdit));
+      setCurrentText(commentToEdit.commentText);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      const response = await fetch(`/api/deleteComment?commentId=${commentId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete comment');
+      setComments(comments.filter(comment => comment.commentId !== commentId));
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
   };
 
   return (
     <div className="comment-section">
-      <CommentsList comments={localComments} />
+      <h2 className="comment-section-title">Comments</h2>
       <CommentForm
+        transcriptId={transcriptId}
+        userId={userId}
         onAddComment={handleAddComment}
         onSaveEdit={handleSaveEdit}
         editingIndex={editingIndex}
-        currentText={editText}
+        currentText={currentText}
         onCancelEdit={handleCancelEdit}
+      />
+      <CommentList
+        comments={comments}
+        onEditComment={handleEditComment}
+        onDeleteComment={handleDeleteComment}
       />
     </div>
   );

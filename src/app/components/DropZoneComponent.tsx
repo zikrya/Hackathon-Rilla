@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { AiOutlineFileAdd } from 'react-icons/ai';
@@ -17,7 +15,7 @@ const DropZoneComponent: React.FC<{ onSelectTranscript: (transcript: Transcript)
   const [fileName, setFileName] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
-  const [showList, setShowList] = useState(true);
+  const [selectedTranscript, setSelectedTranscript] = useState<Transcript | null>(null);
 
   useEffect(() => {
     const fetchTranscripts = async () => {
@@ -27,11 +25,7 @@ const DropZoneComponent: React.FC<{ onSelectTranscript: (transcript: Transcript)
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        if (data.transcriptions) {
-          setTranscripts(data.transcriptions);
-        } else {
-          console.error('Unexpected data format:', data);
-        }
+        setTranscripts(data.transcriptions || []);
       } catch (error) {
         console.error('Error fetching transcripts:', error);
       }
@@ -72,6 +66,7 @@ const DropZoneComponent: React.FC<{ onSelectTranscript: (transcript: Transcript)
         const result = await response.json();
         console.log('Transcription added:', result);
 
+        // Refresh transcripts list
         const updatedResponse = await fetch('/api/getAllTranscriptions');
         if (!updatedResponse.ok) {
           throw new Error('Failed to fetch updated transcripts');
@@ -98,16 +93,21 @@ const DropZoneComponent: React.FC<{ onSelectTranscript: (transcript: Transcript)
     }
   }, []);
 
-  const handleTranscriptSelection = async (transcript: Transcript) => {
-    setShowList(false);
-    onSelectTranscript(transcript);
+  const handleTranscriptSelection = (transcript: Transcript) => {
+    setSelectedTranscript(transcript);
+    onSelectTranscript(transcript); // Notify parent component about the selection
   };
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <div className="dropzone-container">
-      {showList ? (
+      {selectedTranscript ? (
+        <div className="transcript-viewer">
+          <h2>Let's see your transcript</h2>
+          <p>{selectedTranscript.content}</p>
+        </div>
+      ) : (
         <>
           {!fileName ? (
             <div {...getRootProps()} className="dropzone">
@@ -139,7 +139,7 @@ const DropZoneComponent: React.FC<{ onSelectTranscript: (transcript: Transcript)
             </ul>
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 };

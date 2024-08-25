@@ -62,45 +62,51 @@ const Viewer: React.FC = () => {
   };
 
   return (
-    <div className="viewer-container">
-      <div className="transcript-list">
-        <h2>Available Transcripts</h2>
-        <div className="transcript-buttons">
-          {transcripts.length > 0 ? (
-            transcripts.map(transcript => (
-              <button
-                key={transcript.transcriptId}
-                onClick={() => handleTranscriptClick(transcript)}
-                className="transcript-button"
-              >
-                {transcript.title}
-              </button>
-            ))
-          ) : (
-            <p>No transcripts available</p>
+    <div className="container">
+      <div className="viewer-container">
+        <div className="transcript-list">
+          <h2>Available Transcripts</h2>
+          <div className="transcript-buttons">
+            {transcripts.length > 0 ? (
+              transcripts.map(transcript => (
+                <button
+                  key={transcript.transcriptId}
+                  onClick={() => handleTranscriptClick(transcript)}
+                  className="transcript-button"
+                >
+                  {transcript.title}
+                </button>
+              ))
+            ) : (
+              <p>No transcripts available</p>
+            )}
+          </div>
+        </div>
+
+        <div className="transcript-details">
+          {selectedTranscript && (
+            <>
+              <h2>{selectedTranscript.title}</h2>
+              <p>{selectedTranscript.content}</p>
+            </>
+          )}
+        </div>
+
+        <div className="transcript-summary">
+          {isLoading && (
+            <div className="loading-message">
+              <p>Generating summary...</p>
+            </div>
+          )}
+
+          {summary && !isLoading && (
+            <>
+              <h2>Summary</h2>
+              <p>{summary}</p>
+            </>
           )}
         </div>
       </div>
-
-      {selectedTranscript && (
-        <div className="transcript-details">
-          <h2>{selectedTranscript.title}</h2>
-          <p>{selectedTranscript.content}</p>
-        </div>
-      )}
-
-      {isLoading && (
-        <div className="loading-message">
-          <p>Generating summary...</p>
-        </div>
-      )}
-
-      {summary && !isLoading && (
-        <div className="transcript-summary">
-          <h2>Summary</h2>
-          <p>{summary}</p>
-        </div>
-      )}
     </div>
   );
 };

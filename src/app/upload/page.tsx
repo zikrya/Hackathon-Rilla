@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import TwoColumnLayout from '../components/TwoColumnLayout';
 import DropZoneComponent from '../components/DropZoneComponent';
 import CommentSection from '../components/CommentSection';
 
@@ -20,7 +19,7 @@ const UploadPage: React.FC = () => {
     setSelectedTranscript(transcript);
 
     try {
-      const response = await fetch(`/api/getTranscriptionsWithComments?transcriptId=${transcript.transcriptId}`);
+      const response = await fetch(`/api/getTranscriptionWithComments?transcriptId=${transcript.transcriptId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -32,11 +31,19 @@ const UploadPage: React.FC = () => {
   };
 
   return (
-    <TwoColumnLayout leftHeader="Transcript" rightHeader="Comments">
+    <div>
       <DropZoneComponent onSelectTranscript={handleTranscriptSelection} />
-      {selectedTranscript && <CommentSection comments={comments} />}
-    </TwoColumnLayout>
+      {selectedTranscript && (
+        <CommentSection
+          transcriptId={selectedTranscript.transcriptId}
+          userId="user123"
+          comments={comments}
+        />
+      )}
+    </div>
   );
 };
 
 export default UploadPage;
+
+

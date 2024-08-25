@@ -1,27 +1,28 @@
 .header {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Align items to the right */
+    justify-content: flex-end;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.7); /* Opaque background */
-    color: #000; /* Ensure text color is visible against the background */
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #000;
 }
 
 .user-id {
-    margin-right: 10px; /* Space between user ID and divider */
+    margin-right: 10px; 
 }
 
 .divider {
-    margin: 0 10px; /* Space around the divider */
+    margin: 0 10px;
 }
 
 .sign-out {
     background: none;
     border: none;
-    color: #000; /* Ensure sign-out button text color is visible */
+    color: #000;
     font-size: 16px;
     cursor: pointer;
     text-decoration: underline;
+    width: 100px;
 }
 
 .sign-out:hover {
