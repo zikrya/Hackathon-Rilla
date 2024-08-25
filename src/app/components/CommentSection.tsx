@@ -1,40 +1,51 @@
 "use client";
 
 import React, { useState } from 'react';
-import Comment from './Comment';
+import CommentsList from './CommentList';
 import CommentForm from './CommentForm';
 import './CommentSection.css';
 
-const CommentSection = () => {
-  const [comments, setComments] = useState<string[]>([
-    'one',
-    'two',
-    'three'
-  ]);
+interface CommentData {
+  commentId: string;
+  transcriptId: string;
+  userId: string;
+  commentText: string;
+  createdAt: string;
+}
+
+const CommentSection = ({ comments }: { comments: CommentData[] }) => {
+  const [localComments, setLocalComments] = useState<CommentData[]>(comments);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editText, setEditText] = useState('');
 
   const handleAddComment = (text: string) => {
     if (text.trim() === '') return;
-    setComments([...comments, text]);
+    const newComment = {
+      commentId: `temp-${Date.now()}`,
+      transcriptId: '',
+      userId: '',
+      commentText: text,
+      createdAt: new Date().toISOString(),
+    };
+    setLocalComments([...localComments, newComment]);
   };
 
   const handleSaveEdit = (text: string) => {
     if (text.trim() === '') return;
-    setComments(comments.map((comment, index) =>
-      index === editingIndex ? text : comment
+    setLocalComments(localComments.map((comment, index) =>
+      index === editingIndex ? { ...comment, commentText: text } : comment
     ));
     setEditingIndex(null);
     setEditText('');
   };
 
   const handleDeleteComment = (index: number) => {
-    setComments(comments.filter((_, i) => i !== index));
+    setLocalComments(localComments.filter((_, i) => i !== index));
   };
 
   const handleEditComment = (index: number) => {
     setEditingIndex(index);
-    setEditText(comments[index]);
+    setEditText(localComments[index].commentText);
   };
 
   const handleCancelEdit = () => {
@@ -44,20 +55,7 @@ const CommentSection = () => {
 
   return (
     <div className="comment-section">
-      <div className="comments-list">
-        {comments.length > 0 ? (
-          comments.map((comment, index) => (
-            <Comment
-              key={index}
-              text={comment}
-              onEdit={() => handleEditComment(index)}
-              onDelete={() => handleDeleteComment(index)}
-            />
-          ))
-        ) : (
-          <p>No comments yet.</p>
-        )}
-      </div>
+      <CommentsList comments={localComments} />
       <CommentForm
         onAddComment={handleAddComment}
         onSaveEdit={handleSaveEdit}

@@ -1,0 +1,52 @@
+.viewer-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+  }
+  
+  .transcript-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the title horizontally */
+    margin-bottom: 20px;
+  }
+  
+  .transcript-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .transcript-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .transcript-button {
+    background-color: #000000;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .transcript-button:hover {
+    background-color: #4e4e4e;
+  }
+  
+  .transcript-details,
+  .transcript-summary {
+    margin-top: 20px;
+    width: 100%;
+  }
+  

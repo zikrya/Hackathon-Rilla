@@ -1,17 +1,24 @@
-import React from 'react';
-import './CommentsList.css';
+"use client";
 
-interface CommentsListProps {
-  comments: string[];
+import React from 'react';
+import './CommentList.css';
+
+interface Comment {
+  commentId: string;
+  commentText: string;
 }
 
-const CommentsList: React.FC<CommentsListProps> = ({ comments }) => {
+interface CommentsListProps {
+  comments?: Comment[];
+}
+
+const CommentsList: React.FC<CommentsListProps> = ({ comments = [] }) => {
   return (
     <div className="comments-list">
       {comments.length > 0 ? (
-        comments.map((comment, index) => (
-          <div key={index} className="comment-item">
-            {comment}
+        comments.map((comment) => (
+          <div key={comment.commentId} className="comment-item">
+            <p>{comment.commentText}</p>
           </div>
         ))
       ) : (

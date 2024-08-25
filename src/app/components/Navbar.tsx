@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
       </Link>
       <span className="navbar-separator"> | </span>
       <Link className="navbar-link" href="/view">
-        View
+        Summarize
       </Link>
     </nav>
   );

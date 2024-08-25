@@ -29,14 +29,12 @@ const Login: React.FC = () => {
     user.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         console.log("Login successful:", result);
-        router.push("/dashboard"); // Redirect to a protected route after successful login
+        router.push("/upload");
       },
       onFailure: (err) => {
         console.error("Login error:", err);
-        // Display specific error messages
         if (err.code === 'UserNotConfirmedException') {
           setError("Your account has not been confirmed. Please check your email for the confirmation code.");
-           // Redirect to the confirmation page
         } else if (err.code === 'NotAuthorizedException') {
           setError("Invalid email or password. Please try again.");
         } else {

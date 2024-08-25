@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Background from './components/Background';
 import './globals.css';
 import Footer from './components/Footer';
-import TopHeader from './components/TopHeadert';
+import TopHeader from './components/TopHeader';
 
 export const metadata = {
   title: 'Rilla Comments',
